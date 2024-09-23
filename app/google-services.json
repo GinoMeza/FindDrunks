@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "949574737752",
+    "project_id": "finddrunks",
+    "storage_bucket": "finddrunks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949574737752:android:7b4634232d8709fef68f2d",
+        "android_client_info": {
+          "package_name": "com.gin.screenbeody"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuk7aVROZ5ehLjni7glTM_Ivi-C_fuiLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
