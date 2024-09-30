@@ -80,11 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void downloadModel() {
         CustomModelDownloadConditions conditions = new CustomModelDownloadConditions.Builder()
-                .requireWifi()
                 .build();
 
         FirebaseModelDownloader.getInstance()
-                .getModel("modelo_borracho_sano", DownloadType.LOCAL_MODEL, conditions)
+                .getModel("modelo_final", DownloadType.LOCAL_MODEL, conditions)
                 .addOnSuccessListener(model -> {
                     // El modelo se ha descargado correctamente
 //                    try (FileInputStream modelFile = new FileInputStream(model.getFile())) {
@@ -173,27 +172,51 @@ public class MainActivity extends AppCompatActivity {
         Bitmap resizedBitmap = resizeImage(imageBitmap);
         ByteBuffer input = convertBitmapToByteBuffer(resizedBitmap);
 
-        // Definir la salida del modelo (2 clases: borracho y sano)
-        float[][] output = new float[1][2];
+//        // Definir la salida del modelo (2 clases: borracho y sano)
+//        float[][] output = new float[1][2];
+//
+//        // Hacer la inferencia
+//        interpreter.run(input, output);
+//
+//        // Interpretar el resultado
+//        float borrachoScore = output[0][0];
+//        float sanoScore = output[0][1];
+//        String result;
 
-        // Hacer la inferencia
+        // Definir la salida del modelo (1 valor de probabilidad)
+        float[][] output = new float[1][1];
+
+            // Hacer la inferencia
         interpreter.run(input, output);
 
         // Interpretar el resultado
-        float borrachoScore = output[0][0];
-        float sanoScore = output[0][1];
+        float borrachoProbability = output[0][0];  // Probabilidad de estar borracho
         String result;
 
-        if (borrachoScore > sanoScore) {
+        if (borrachoProbability > 0.5) {
+            // Persona borracha detectada
             Toast.makeText(this, "Persona borracha detectada", Toast.LENGTH_LONG).show();
             result = "Persona borracha detectada";
         } else {
+            // Persona sana detectada
             Toast.makeText(this, "Persona sana detectada", Toast.LENGTH_LONG).show();
             result = "Persona sana detectada";
         }
 
         // Mostrar el resultado usando el fragmento
         showResultInFragment(imageBitmap, result);
+
+
+//        if (borrachoScore > sanoScore) {
+//            Toast.makeText(this, "Persona borracha detectada", Toast.LENGTH_LONG).show();
+//            result = "Persona borracha detectada";
+//        } else {
+//            Toast.makeText(this, "Persona sana detectada", Toast.LENGTH_LONG).show();
+//            result = "Persona sana detectada";
+//        }
+//
+//        // Mostrar el resultado usando el fragmento
+//        showResultInFragment(imageBitmap, result);
     }
 
     private void showResultInFragment(Bitmap bitmap, String result) {
